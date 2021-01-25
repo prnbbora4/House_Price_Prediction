@@ -1,4 +1,4 @@
-from django.shortcuts import render;
+from django.shortcuts import render
 import numpy as np
 import pandas as pd
 import seaborn as sns
@@ -18,7 +18,6 @@ def result(request):
     data = data.drop(['Address'], axis=1)
     x = data.drop(['Price'], axis=1)
     y = data['Price']
-
     X_train, X_test, Y_train, Y_test = train_test_split(x, y, test_size=0.3)
     model = LinearRegression()
     model.fit(X_train, Y_train)
@@ -29,9 +28,9 @@ def result(request):
     var4 = float(request.GET['n4'])
     var5 = float(request.GET['n5'])
 
-    pred = model.predict(np.array([var1, var2, var3, var4, var5]))
+    pred = model.predict(np.array([var1, var2, var3, var4, var5]).reshape(1,-1))
     pred = round(pred[0])
 
-    price = "The Predictied price is $ " + str(pred)
+    price = "The Predicted price is $ "+str(pred)
 
-    return render(request, "predict.html", {"result2": price})
+    return render(request, "predict.html", {"result2":price})
